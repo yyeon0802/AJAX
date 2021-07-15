@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax POST 요청</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+<script>
+	function reqList() {
+		
+		let param = { 
+				contacts:[
+			    	{no:1, name:"홍길동", tel:"010-1111-1111", address:"지리산"},
+			    	{no:2, name:"임꺽정", tel:"010-1111-1111", address:"구월산"},
+			    	{no:3, name:"장길산", tel:"010-1111-1111", address:"장산곶"},
+			    	{no:4, name:"일지매", tel:"010-1111-1111", address:"구월산"},
+			    	{no:5, name:"차돌바위", tel:"010-1111-1111", address:"장산곶"}
+				]
+		}
+		
+		/*
+		JSON.stringify : js객체를 json문자열로 변환
+		JSON.parse : json문자열을 js객체로 변환
+		*/
+		
+		$.ajax({
+			url : "update_batch.do", 
+			type : "POST",
+			contentType: "application/json",
+			data : JSON.stringify(param), 
+			success : function(data) { // 서버에 응답이 오면 실행하는 함수
+				$("#resp").html(data); // 들어온 데이터를 html에 표시하라
+			}
+		})
+	}
+
+	function delList() {
+		$("#resp").html("");
+	}
+</script>
+</head>
+<body>
+	<button type="button" onclick="reqList();">요청</button>
+	<button type="button" onclick="delList();">삭제</button>
+	<p id="resp"></p>
+</body>
+</html>

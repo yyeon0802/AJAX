@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax POST 요청</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
+<script>
+	function reqList0() {
+		let param = {};
+		param.name = "red road";
+		param.tel = "010-3381-8831";
+		param.address = "지리산";
+
+		$.post("add.do", param, function(data) {
+			$("#resp").html(data);
+		});
+	}
+
+	function reqList1() {
+		let param = {};
+		param.name = "홍길동";
+		param.tel = "010-8881-8888";
+		param.address = "율도국";
+
+		$.post({ //get과 마찬가지로 type을 삭제하고 함수에 post 추가함
+			url : "add.do",
+			data : param,
+			success : function(data) { // 서버에 응답이 오면 실행하는 함수
+				$("#resp").html(data); // 들어온 데이터를 html에 표시하라
+			}
+		})
+	}
+
+	function delList() {
+		$("#resp").html("");
+	}
+</script>
+</head>
+<body>
+	<button type="button" onclick="reqList0();">요청ver.0</button>
+	<button type="button" onclick="reqList1();">요청ver.1</button>
+	<button type="button" onclick="delList();">삭제</button>
+	<p id="resp"></p>
+</body>
+</html>
