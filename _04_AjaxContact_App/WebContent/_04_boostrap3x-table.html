@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      h1{
+        margin-bottom:50px;
+      }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  	<script>
+  	
+  		function reqList(){
+  			$.ajax({
+  				url:"list.do",
+  				type: "GET",
+  				data: {pageno:0, pagesize:0}, //값을 넣지 않으면 전체 데이터
+  				success: function(data){
+  					// JSON문자열을 -> javaScript 객체로 변환
+  					let addr = JSON.parse(data);
+  					
+  					/* 들어온 주소록 갯수만큼 for문으로 반복하면서,
+  						<tr></tr>을 만들어서, table에 추가 한다.
+  					*/
+  					let num = addr["contacts"].length;
+  					for(let i = 0; i < num; i++){
+  						let address = addr["contacts"][i];
+  						let $table = $("#contactTable");
+  						let $tr = $("<tr></tr>");
+  						let $no = $("<td>" + address.no + "</td>");
+  						let $name = $("<td>" + address.name + "</td>");
+  						let $tel = $("<td>" + address.tel + "</td>");
+  						let $address = $("<td>" + address.address + "</td>");
+  						$tr.append($no)
+  							.append($name)
+  							.append($tel)
+  							.append($address);
+  						$table.append($tr);
+  					}
+  				}
+  			})
+  		}
+  		
+		$(document).ready(function(){
+			$("#btnList").click(function(){
+				reqList();
+			});
+		});		
+  	</script>
+  </head>
+<body>
+  <h1>슈퍼푸드</h1>
+  <button id="btnList" class="btn btn-success">요청</button>
+  <div class="table-responsive">
+    <table id="contactTable" class="table table-striped table-hover">
+      <tr>
+        <th>번호</th>
+        <th>이름</th>
+        <th>전화</th>
+        <th>주소</th>
+      </tr>     
+    </table>
+  </div>
+</body>
+</html>

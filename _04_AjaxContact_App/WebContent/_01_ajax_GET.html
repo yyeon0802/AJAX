@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax GET</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+	function reqList(){
+		$.ajax({
+			url:"list.do", //이 주소로 get 요청이 들어온다
+			type:"GET",
+			data:{pageno:1, pagesize:5},
+			success:function(data){ // 서버에 응답이 오면 실행하는 함수
+				$("#resp").html(data); // 들어온 데이터를 html에 표시하라
+			}
+		})
+	}
+	
+	function delList(){
+		$("#resp").html("");		
+	}
+	
+
+</script>
+</head>
+<body>
+	<button type="button" onclick="reqList();">요청</button>
+	<button type="button" onclick="delList();">삭제</button>
+	<p id="resp"></p>
+</body>
+</html>

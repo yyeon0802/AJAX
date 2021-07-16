@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	table{
+		width:400px;
+		border:1px solid black;
+		border-collapse:collapse;
+	}
+	td, th{
+		border:1px solid black;
+		text-align:center;
+	}
+	table > thead > tr{
+		color:yellow;
+		background-color:purple;
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://www.jsviews.com/download/jsrender.js"></script>
+
+<!-- 1) 데이터 영역
+		- 서버로부터 json 데이터 가져오기
+		- 데이터와 viewTemplate을 결합하여 UI영역에 표현하기
+ -->
+<script>
+	$(document).ready(function(){
+		$.get("list.do", function(data){
+			var obj = JSON.parse(data);  // json string -> js 객체
+			var tmpl = $.templates("#contact_template");	// viewTemplate
+			var str = tmpl.render(obj.contacts);	// 데이터+viewTemplate=html UI
+			$("#container").html(str);	// UI영역에 html UI 표시
+		});
+	});
+</script>
+
+<!-- 2) viewTemplate(데이터가 들어오면 표현될 UI 템플릿) -->
+<script id="contact_template" type="text/x-jsrender">
+	<tr>
+		<td>{{:no}}</td>
+		<td>{{:name}}</td>
+		<td>{{:tel}}</td>
+		<td>{{:address}}</td>
+	</tr>
+</script>
+</head>
+<body>
+	<table id="list">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>이름</th>
+				<th>전화번호</th>
+				<th>주소</th>
+			</tr>
+		</thead>
+		
+		<!-- UI가 출력될 영역 -->
+		<tbody id="container">
+		</tbody>
+	</table>
+</body>
+</html>
+
+
